@@ -32,6 +32,10 @@ only place the table name appears.
 - Track title is passed to JS via `json_encode` instead of `addslashes`
 - `shareMusic()` takes the event explicitly instead of relying on the global `event`
 - Added `aria-label` to the volume slider
+- The footer is now a **CTA** — `Loved it? Make another one at abcMusic`, pointing to
+  `https://abcmusic-quiz-us.netlify.app/?utm_source=link_pagina_entrega`
+  (was `Made with ♥ by abcMusic` → `abcmusic.tech`). Brightened from `#535353` to
+  `#b3b3b3` with a hover state, so it reads as a call to action instead of a credit line.
 
 Everything else is unchanged: cover + blur backdrop, play/pause, ±10s seek,
 scrubbable progress bar, volume, shuffle, repeat, like and native share.

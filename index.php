@@ -348,16 +348,19 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
     }
     .action-icon-btn:hover { color: #fff; }
 
-    /* ── Footer ── */
+    /* ── Footer CTA ── */
     .brand {
       text-align: center;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
-      color: #535353;
+      color: #b3b3b3;
       text-decoration: none;
-      letter-spacing: .06em;
+      letter-spacing: .04em;
       margin-top: auto;
+      padding: 4px 0;
+      transition: color .15s;
     }
+    .brand:hover { color: #fff; }
     .brand span { color: #1DB954; }
 
     audio { display: none; }
@@ -483,9 +486,9 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
     </button>
   </div>
 
-  <!-- Brand -->
-  <a class="brand" href="https://abcmusic.tech" target="_blank">
-    Made with ♥ by <span>abcMusic</span>
+  <!-- CTA -->
+  <a class="brand" href="https://abcmusic-quiz-us.netlify.app/?utm_source=link_pagina_entrega" target="_blank" rel="noopener">
+    Loved it? Make another one at <span>abcMusic</span>
   </a>
 
 </div>
