@@ -351,13 +351,14 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
     /* ── Footer CTA ── */
     .brand {
       text-align: center;
-      font-size: 13px;
+      font-size: 15px;
+      line-height: 1.5;
       font-weight: 600;
       color: #b3b3b3;
       text-decoration: none;
       letter-spacing: .04em;
       margin-top: auto;
-      padding: 4px 0;
+      padding: 8px 0;
       transition: color .15s;
     }
     .brand:hover { color: #fff; }
