@@ -1,6 +1,6 @@
 <?php
 // ──────────────────────────────────────────
-//  abcMusic — Song delivery page (EN)
+//  abcMusic — Página de entrega de la canción (ES)
 //  music.abcmusic.tech/{uuid}
 // ──────────────────────────────────────────
 
@@ -9,9 +9,12 @@ $uuid = preg_replace('/[^a-f0-9\-]/i', '', $path);
 
 if (strlen($uuid) !== 36) {
     http_response_code(404);
-    die('Song not found.');
+    die('Canción no encontrada.');
 }
 
+// Funil em espanhol (link "crea otra"). Troque pela variável SITE_URL no
+// Easypanel quando o site novo estiver no ar; sem ela, cai no antigo.
+define('SITE_URL', rtrim(getenv('SITE_URL') ?: 'https://abcmusic-quiz-us.netlify.app', '/'));
 define('SUPABASE_URL',   'https://baltzukuszagxcgkfrpi.supabase.co');
 define('SUPABASE_KEY',   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhbHR6dWt1c3phZ3hjZ2tmcnBpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMTg4MjMsImV4cCI6MjA5Mjg5NDgyM30.gcRHTzssV3OsbObvnpnbROrrpA8Dn6zZz9j_qDJdw0s');
 define('SUPABASE_TABLE', 'presentes');
@@ -31,21 +34,21 @@ curl_close($ch);
 $rows = json_decode($resp, true);
 if (empty($rows)) {
     http_response_code(404);
-    die('Song not found.');
+    die('Canción no encontrada.');
 }
 
 $m         = $rows[0];
-$titulo    = htmlspecialchars($m['titulo']    ?? 'Your special song');
+$titulo    = htmlspecialchars($m['titulo']    ?? 'Tu canción especial');
 $audio_url = htmlspecialchars($m['audio_url'] ?? '');
 $cover_url = htmlspecialchars($m['cover_url'] ?? '');
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta property="og:title"       content="<?= $titulo ?> 🎵">
-  <meta property="og:description" content="A song made just for you by abcMusic.">
+  <meta property="og:description" content="Una canción hecha solo para ti por abcMusic.">
   <meta property="og:image"       content="<?= $cover_url ?>">
   <meta name="theme-color"        content="#121212">
   <title><?= $titulo ?> — abcMusic</title>
@@ -375,13 +378,13 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
 
   <!-- Top bar -->
   <div class="top-bar">
-    <button class="icon-btn" onclick="history.back()" aria-label="Back">
+    <button class="icon-btn" onclick="history.back()" aria-label="Volver">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="6 9 12 15 18 9"/>
       </svg>
     </button>
-    <span class="top-label">Now playing</span>
-    <button class="icon-btn" aria-label="More options" onclick="shareMusic(event)">
+    <span class="top-label">Reproduciendo</span>
+    <button class="icon-btn" aria-label="Más opciones" onclick="shareMusic(event)">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
         <circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/>
       </svg>
@@ -391,7 +394,7 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
   <!-- Cover -->
   <div class="cover-wrap">
     <?php if ($cover_url): ?>
-      <img src="<?= $cover_url ?>" alt="Song cover" loading="eager">
+      <img src="<?= $cover_url ?>" alt="Portada de la canción" loading="eager">
     <?php else: ?>
       <div class="cover-placeholder">🎵</div>
     <?php endif; ?>
@@ -403,7 +406,7 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
       <div class="track-title"><?= $titulo ?></div>
       <div class="track-sub">abcMusic</div>
     </div>
-    <button class="heart-btn" id="heartBtn" onclick="toggleHeart()" aria-label="Like">
+    <button class="heart-btn" id="heartBtn" onclick="toggleHeart()" aria-label="Me gusta">
       <svg id="heartIcon" width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/>
       </svg>
@@ -425,32 +428,32 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
 
   <!-- Controls -->
   <div class="controls">
-    <button class="ctrl-btn" id="shuffleBtn" aria-label="Shuffle">
+    <button class="ctrl-btn" id="shuffleBtn" aria-label="Aleatorio">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
         <path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>
       </svg>
     </button>
 
-    <button class="ctrl-btn" onclick="seek(-10)" aria-label="Rewind 10 seconds">
+    <button class="ctrl-btn" onclick="seek(-10)" aria-label="Retroceder 10 segundos">
       <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/>
         <text x="12" y="16" text-anchor="middle" font-size="5.5" font-weight="bold" fill="currentColor" font-family="sans-serif">10</text>
       </svg>
     </button>
 
-    <button class="play-btn" id="playBtn" onclick="togglePlay()" aria-label="Play/Pause">
+    <button class="play-btn" id="playBtn" onclick="togglePlay()" aria-label="Reproducir/Pausar">
       <svg id="iconPlay" width="30" height="30" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
       <svg id="iconPause" width="30" height="30" viewBox="0 0 24 24" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
     </button>
 
-    <button class="ctrl-btn" onclick="seek(10)" aria-label="Forward 10 seconds">
+    <button class="ctrl-btn" onclick="seek(10)" aria-label="Adelantar 10 segundos">
       <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 5V1l5 5-5 5V7c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6h2c0 4.42-3.58 8-8 8s-8-3.58-8-8 3.58-8 8-8z"/>
         <text x="12" y="16" text-anchor="middle" font-size="5.5" font-weight="bold" fill="currentColor" font-family="sans-serif">10</text>
       </svg>
     </button>
 
-    <button class="ctrl-btn" id="repeatBtn" aria-label="Repeat">
+    <button class="ctrl-btn" id="repeatBtn" aria-label="Repetir">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
         <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/>
       </svg>
@@ -465,7 +468,7 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
     <div class="vol-slider-wrap">
       <div class="vol-bg"></div>
       <div class="vol-fill" id="volFill"></div>
-      <input type="range" class="vol-input" id="volInput" min="0" max="100" value="100" aria-label="Volume">
+      <input type="range" class="vol-input" id="volInput" min="0" max="100" value="100" aria-label="Volumen">
     </div>
     <svg class="vol-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
       <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
@@ -474,13 +477,13 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
 
   <!-- Actions row -->
   <div class="actions-row">
-    <button class="action-icon-btn" aria-label="Devices">
+    <button class="action-icon-btn" aria-label="Dispositivos">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
         <path d="M21 3H3c-1.1 0-2 .9-2 2v3h2V5h18v13h-7v2h7c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-10 8H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h10c.55 0 1-.45 1-1V12c0-.55-.45-1-1-1zm-1 10H2v-8h8v8zm-4-1c.83 0 1.5-.67 1.5-1.5S7.83 17 7 17s-1.5.67-1.5 1.5S6.17 20 7 20z"/>
       </svg>
     </button>
 
-    <button class="action-icon-btn" onclick="shareMusic(event)" aria-label="Share">
+    <button class="action-icon-btn" onclick="shareMusic(event)" aria-label="Compartir">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
         <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92zM18 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm12 7.02c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/>
       </svg>
@@ -488,8 +491,8 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
   </div>
 
   <!-- CTA -->
-  <a class="brand" href="https://abcmusic-quiz-us.netlify.app/?utm_source=link_pagina_entrega" target="_blank" rel="noopener">
-    Loved it? Make another one at <span>abcMusic</span>
+  <a class="brand" href="<?= SITE_URL ?>/?utm_source=link_pagina_entrega" target="_blank" rel="noopener">
+    ¿Te gustó? Crea otra en <span>abcMusic</span>
   </a>
 
 </div>
@@ -586,7 +589,7 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
     if (navigator.share) {
       navigator.share({
         title: trackTitle,
-        text: 'Listen to this special song made by abcMusic!',
+        text: '¡Escucha esta canción especial hecha por abcMusic!',
         url: window.location.href
       }).catch(() => {});
     } else {
@@ -596,7 +599,7 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
         btn.style.color = '#1DB954';
         setTimeout(() => btn.style.color = '', 1500);
       }).catch(() => {
-        alert('Copy the link: ' + window.location.href);
+        alert('Copia el enlace: ' + window.location.href);
       });
     }
   }
