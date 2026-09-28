@@ -50,7 +50,7 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
   <meta property="og:title"       content="<?= $titulo ?> 🎵">
   <meta property="og:description" content="Una canción hecha solo para ti por abcMusic.">
   <meta property="og:image"       content="<?= $cover_url ?>">
-  <meta name="theme-color"        content="#121212">
+  <meta name="theme-color"        content="#f6f8ee">
   <title><?= $titulo ?> — abcMusic</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -59,8 +59,8 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
 
     body {
       min-height: 100dvh;
-      background: #121212;
-      color: #fff;
+      background: #f6f8ee;
+      color: #24301d;
       font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
       display: flex;
       flex-direction: column;
@@ -76,7 +76,10 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
       background-image: url('<?= $cover_url ?>');
       background-size: cover;
       background-position: center;
-      filter: blur(90px) brightness(0.12) saturate(1.6);
+      /* Tema claro (2026-09-28): a capa continua no fundo, só que como um
+         véu suave sobre o creme — antes era escurecida a 12%. */
+      filter: blur(90px) saturate(1.3);
+      opacity: .22;
       transform: scale(1.2);
     }
 
@@ -103,7 +106,7 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
       background: none;
       border: none;
       cursor: pointer;
-      color: #fff;
+      color: #24301d;
       padding: 6px;
       display: flex;
       align-items: center;
@@ -117,7 +120,7 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
       font-weight: 700;
       letter-spacing: .18em;
       text-transform: uppercase;
-      color: #fff;
+      color: #24301d;
     }
 
     /* ── Cover ── */
@@ -126,9 +129,9 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
       aspect-ratio: 1;
       border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 40px 100px rgba(0,0,0,.85);
+      box-shadow: 0 24px 60px rgba(36,48,29,.22);
       margin-bottom: 36px;
-      background: #282828;
+      background: #e7f1d6;
     }
     .cover-wrap img {
       width: 100%; height: 100%;
@@ -155,7 +158,7 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
     .track-title {
       font-size: 22px;
       font-weight: 800;
-      color: #fff;
+      color: #24301d;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -165,13 +168,13 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
     .track-sub {
       font-size: 14px;
       font-weight: 500;
-      color: #b3b3b3;
+      color: #74806a;
     }
     .heart-btn {
       background: none;
       border: none;
       cursor: pointer;
-      color: #1DB954;
+      color: #3f7d20;
       padding: 6px;
       flex-shrink: 0;
       display: flex;
@@ -199,26 +202,26 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
     .progress-bg {
       position: absolute;
       inset: 0;
-      background: #535353;
+      background: #dfe6d2;
       border-radius: 2px;
     }
     .progress-fill {
       position: absolute;
       left: 0; top: 0; bottom: 0;
       width: 0%;
-      background: #fff;
+      background: #3f7d20;
       border-radius: 2px;
       pointer-events: none;
       transition: width .25s linear;
     }
-    .progress-track-wrap:hover .progress-fill { background: #1DB954; }
+    .progress-track-wrap:hover .progress-fill { background: #2d5e14; }
     .progress-thumb {
       position: absolute;
       top: 50%;
       left: 0%;
       transform: translate(-50%, -50%);
       width: 12px; height: 12px;
-      background: #fff;
+      background: #3f7d20;
       border-radius: 50%;
       opacity: 0;
       pointer-events: none;
@@ -231,7 +234,7 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
       justify-content: space-between;
       font-size: 11px;
       font-weight: 600;
-      color: #b3b3b3;
+      color: #74806a;
       font-variant-numeric: tabular-nums;
     }
 
@@ -246,16 +249,16 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
       background: none;
       border: none;
       cursor: pointer;
-      color: #b3b3b3;
+      color: #74806a;
       padding: 8px;
       display: flex;
       align-items: center;
       transition: color .15s, transform .1s;
       -webkit-tap-highlight-color: transparent;
     }
-    .ctrl-btn:hover { color: #fff; }
+    .ctrl-btn:hover { color: #24301d; }
     .ctrl-btn:active { transform: scale(.9); }
-    .ctrl-btn.active { color: #1DB954; }
+    .ctrl-btn.active { color: #3f7d20; }
     .ctrl-btn.active::after {
       content: '';
       display: block;
@@ -263,7 +266,7 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
       bottom: 0; left: 50%;
       transform: translateX(-50%);
       width: 4px; height: 4px;
-      background: #1DB954;
+      background: #3f7d20;
       border-radius: 50%;
     }
     .ctrl-btn { position: relative; }
@@ -271,7 +274,7 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
     .play-btn {
       width: 64px; height: 64px;
       border-radius: 50%;
-      background: #fff;
+      background: #3f7d20;
       border: none;
       cursor: pointer;
       display: flex;
@@ -281,9 +284,9 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
       flex-shrink: 0;
       -webkit-tap-highlight-color: transparent;
     }
-    .play-btn:hover { background: #f0f0f0; transform: scale(1.05); }
+    .play-btn:hover { background: #2d5e14; transform: scale(1.05); }
     .play-btn:active { transform: scale(.95); }
-    .play-btn svg { fill: #000; }
+    .play-btn svg { fill: #fff; }
 
     /* ── Volume ── */
     .volume-row {
@@ -292,7 +295,7 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
       gap: 10px;
       margin-bottom: 36px;
     }
-    .vol-icon { color: #b3b3b3; flex-shrink: 0; }
+    .vol-icon { color: #74806a; flex-shrink: 0; }
     .vol-slider-wrap {
       flex: 1;
       position: relative;
@@ -308,18 +311,18 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
     .vol-bg {
       position: absolute;
       inset: 0;
-      background: #535353;
+      background: #dfe6d2;
       border-radius: 2px;
     }
     .vol-fill {
       position: absolute;
       left: 0; top: 0; bottom: 0;
       width: 100%;
-      background: #fff;
+      background: #3f7d20;
       border-radius: 2px;
       pointer-events: none;
     }
-    .vol-slider-wrap:hover .vol-fill { background: #1DB954; }
+    .vol-slider-wrap:hover .vol-fill { background: #2d5e14; }
     input.vol-input {
       position: absolute;
       inset: -10px 0;
@@ -342,14 +345,14 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
       background: none;
       border: none;
       cursor: pointer;
-      color: #b3b3b3;
+      color: #74806a;
       padding: 6px;
       display: flex;
       align-items: center;
       transition: color .15s;
       -webkit-tap-highlight-color: transparent;
     }
-    .action-icon-btn:hover { color: #fff; }
+    .action-icon-btn:hover { color: #24301d; }
 
     /* ── Footer CTA ── */
     .brand {
@@ -357,15 +360,15 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
       font-size: 15px;
       line-height: 1.5;
       font-weight: 600;
-      color: #b3b3b3;
+      color: #74806a;
       text-decoration: none;
       letter-spacing: .04em;
       margin-top: auto;
       padding: 8px 0;
       transition: color .15s;
     }
-    .brand:hover { color: #fff; }
-    .brand span { color: #1DB954; }
+    .brand:hover { color: #24301d; }
+    .brand span { color: #3f7d20; }
 
     audio { display: none; }
   </style>
@@ -579,7 +582,7 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
   let hearted = false;
   function toggleHeart() {
     hearted = !hearted;
-    document.getElementById('heartIcon').style.color = hearted ? '#1DB954' : '#1DB954';
+    document.getElementById('heartIcon').style.color = hearted ? '#3f7d20' : '#3f7d20';
     document.getElementById('heartBtn').style.transform = 'scale(.88)';
     setTimeout(() => document.getElementById('heartBtn').style.transform = '', 150);
   }
@@ -596,7 +599,7 @@ $cover_url = htmlspecialchars($m['cover_url'] ?? '');
       const btn = e && e.currentTarget;
       navigator.clipboard.writeText(window.location.href).then(() => {
         if (!btn) return;
-        btn.style.color = '#1DB954';
+        btn.style.color = '#3f7d20';
         setTimeout(() => btn.style.color = '', 1500);
       }).catch(() => {
         alert('Copia el enlace: ' + window.location.href);
